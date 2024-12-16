@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +43,7 @@
         }
 
         .back-button {
-            background-color:#87ceeb;
+            background-color: #87ceeb;
             color: #f5f5f5;
             text-decoration: none;
             font-weight: 500;
@@ -60,7 +61,7 @@
         }
 
         .back-button:hover {
-            background-color:#f5f5f5;
+            background-color: #f5f5f5;
             color: #87ceeb;
         }
 
@@ -73,7 +74,7 @@
             background: white;
             padding: 15px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transform: rotate(-3deg);
             transition: all 0.3s ease;
             cursor: pointer;
@@ -85,7 +86,7 @@
 
         .photo-card:hover {
             transform: rotate(0) scale(1.02);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             z-index: 2;
         }
 
@@ -103,6 +104,7 @@
             background: #87ceeb;
             color: #fff;
             border-radius: 50%;
+            border: none;
             width: 40px;
             height: 40px;
             display: flex;
@@ -129,7 +131,7 @@
         .modal-body img {
             width: 100%;
             border-radius: 8px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
         .modal-nav-buttons {
@@ -142,7 +144,7 @@
         }
 
         .modal-nav-buttons button {
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             border: none;
             border-radius: 50%;
             width: 40px;
@@ -162,7 +164,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             border: none;
             border-radius: 50%;
             width: 40px;
@@ -183,7 +185,8 @@
                 flex-direction: column-reverse;
             }
 
-            .header .col, .header .col-auto {
+            .header .col,
+            .header .col-auto {
                 width: 100%;
                 text-align: center;
                 margin-bottom: 10px;
@@ -200,6 +203,7 @@
         }
     </style>
 </head>
+
 <body>
     <header class="header">
         <div class="container">
@@ -262,6 +266,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const photos = [
             '../assets/gunung-gambir/foto (1).JPG',
@@ -301,18 +306,19 @@
         const gallery = document.getElementById('gallery');
         const modalImage = document.getElementById('modalImage');
         const photoModal = new bootstrap.Modal(document.getElementById('photoModal'));
+        const correctPassword = "arsha";
 
         photos.forEach((photo, index) => {
             const col = document.createElement('div');
             col.className = 'col-12 col-md-6 col-lg-4';
             col.innerHTML = `
-                <div class="photo-card" data-index="${index}">
-                    <img src="${photo}" alt="Gallery photo ${index + 1}" loading="lazy">
-                    <a href="${photo}" download class="download-icon">
-                        <i class="fas fa-download"></i>
-                    </a>
-                </div>
-            `;
+            <div class="photo-card" data-index="${index}">
+                <img src="${photo}" alt="Gallery photo ${index + 1}" loading="lazy">
+                <button class="download-icon" data-photo="${photo}">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+        `;
             gallery.appendChild(col);
         });
 
@@ -326,6 +332,38 @@
             });
         });
 
+        document.querySelectorAll('.download-icon').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const photoUrl = button.dataset.photo;
+
+                Swal.fire({
+                    title: 'Masukkan Password',
+                    input: 'password',
+                    inputPlaceholder: 'Masukkan password untuk download',
+                    showCancelButton: true,
+                    confirmButtonText: 'Submit',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (result.value === correctPassword) {
+                            const a = document.createElement('a');
+                            a.href = photoUrl;
+                            a.download = photoUrl.split('/').pop();
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+
+                            Swal.fire('Berhasil!', 'Foto berhasil diunduh.', 'success');
+                        } else {
+                            Swal.fire('Gagal!', 'Password salah.', 'error');
+                        }
+                    }
+                });
+            });
+        });
+
+        // Navigation buttons in modal
         document.getElementById('prevButton').addEventListener('click', () => {
             currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
             modalImage.src = photos[currentPhotoIndex];
@@ -338,8 +376,8 @@
 
         document.addEventListener('keydown', (e) => {
             if (!photoModal._isShown) return;
-            
-            switch(e.key) {
+
+            switch (e.key) {
                 case 'ArrowLeft':
                     document.getElementById('prevButton').click();
                     break;
@@ -353,4 +391,5 @@
         });
     </script>
 </body>
+
 </html>
