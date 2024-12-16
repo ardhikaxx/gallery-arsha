@@ -26,38 +26,82 @@
             right: 0;
             bottom: 0;
             background: radial-gradient(circle at center, rgba(40, 40, 40, 0.3) 0%, rgba(0, 0, 0, 1) 100%);
-        }
-
-        /* .hero-image-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
             z-index: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             pointer-events: none;
-        }
-
-        .hero-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            filter: brightness(0.8);
-            pointer-events: none;
-            z-index: 1;
-        } */
+        }
 
         .hero-content {
             position: relative;
             z-index: 2;
+            text-align: center;
+        
+        }
+
+        .hero .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            animation: move 10s linear infinite;
+        }
+
+        .circle:nth-child(1) {
+            width: 220px;
+            height: 220px;
+            background: #87ceeb;
+            top: 10%;
+            left: 10%;
+        }
+
+        .circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: #87ceeb;
+            top: 55%;
+            left: 85%;
+        }
+
+        .circle:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            background: #87ceeb;
+            top: 70%;
+            left: 30%;
+        }
+
+        .circle:nth-child(4) {
+            width: 135px;
+            height: 135px;
+            background: #87ceeb;
+            top: 20%;
+            left: 70%;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            50% {
+                transform: translateY(-30px) translateX(30px);
+            }
+
+            100% {
+                transform: translateY(0) translateX(0);
+            }
         }
 
         .highlight-1 {
-            color: #ff99aa;
+            color: #87ceeb;;
             position: relative;
             display: inline-block;
         }
@@ -94,10 +138,20 @@
             position: absolute;
             bottom: 30px;
             left: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             transform: translateX(-50%);
             animation: bounce 2s infinite;
             cursor: pointer;
             z-index: 2;
+        }
+
+        .bi-mouse {
+            font-size: 54px;
+            color: #87ceeb;
         }
 
         @keyframes bounce {
@@ -199,7 +253,7 @@
         }
 
         .btn-open:hover {
-            background-color: #333;
+            background-color: #87ceeb;;
             color: white;
         }
 
@@ -214,20 +268,53 @@
             margin: 0;
             opacity: 0.7;
         }
+
+        @media (max-width: 768px) {
+        .circle:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 25%;
+            left: 5%;
+        }
+
+        .circle:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            left: 70%;
+        }
+
+        .circle:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 70%;
+            left: 20%;
+        }
+
+        .circle:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            top: 80%;
+            left: 50%;
+        }
+    }
     </style>
 </head>
 
 <body>
     <section class="hero">
+        <div class="background-animation">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
         <div class="container">
-            <div class="hero-content text-center">
+            <div class="hero-content">
                 <h2 class="fw-bold mb-3">Gallery ARSHA</h2>
                 <h1 class="display-2 fw-bold mb-4">Love <span class="highlight-1">Captured</span>, Memories <span class="highlight-2">Preserved</span></h1>
             </div>
         </div>
-        <!-- <div class="hero-image-wrapper">
-            <img src="./assets/img/background-hero.jpg" alt="Hero Image" class="hero-image">
-        </div> -->
         <div class="scroll-indicator">
             <i class="bi bi-mouse text-white fs-1"></i>
         </div>
