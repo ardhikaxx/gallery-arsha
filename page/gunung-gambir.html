@@ -363,7 +363,6 @@
             });
         });
 
-        // Navigation buttons in modal
         document.getElementById('prevButton').addEventListener('click', () => {
             currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
             modalImage.src = photos[currentPhotoIndex];
